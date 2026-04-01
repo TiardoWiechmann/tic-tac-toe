@@ -12,7 +12,7 @@ function Gameboard() {
     for (let i=0; i<3; i++) {
         board[i] = []
         for(j=0; j<3; j++){
-            board[i].push(0);
+            board[i].push(" ");
         }
     }
 
@@ -60,8 +60,8 @@ function Gameboard() {
 
 function Gamecontroller() {
     const board = Gameboard();
-    const player1 = createPlayer("human", "1");
-    const player2 = createPlayer("computer", "2");
+    const player1 = createPlayer("human", "X");
+    const player2 = createPlayer("computer", "O");
     let activePlayer = player1;
     printNewRound();
 
@@ -137,12 +137,45 @@ function Gamecontroller() {
     }
 
 
-    return { playRound, getActivePlayer };
+    return { playRound, getActivePlayer, getBoard: board.getBoard() };
 }
 
 
 
+// Display game on webpage
+// Display who's turn it is
+// Display 
+function displayGame() {
+    const game = Gamecontroller();
+    const turnDiv = document.querySelector(".turn");
+    const boardDiv = document.querySelector(".board");
+    updateScreen();
+
+    function updateScreen() {
+        // Clear the board...
+
+        // Display who's turn
+        turnDiv.textContent = `It's ${game.getActivePlayer().name}'s turn: `;
+        
+        // Display board
+        const board = game.getBoard;
+        board.forEach( (row, r_index) => {
+            row.forEach( (cell, c_index) => {
+                const cellBtn = document.createElement("button");
+                cellBtn.className = "cell";
+                cellBtn.setAttribute("data-index", )
+                cellBtn.textContent = cell;
+                boardDiv.appendChild(cellBtn);
+            });
+        });
+    }
+
+    // Play
+    // Use Eventlistener to get change cell
+    boardDiv.addEventListener("click", e => {
+        const currentBtn = e.target
+    })
+}
 
 
-const board = Gameboard();
-const game = Gamecontroller();
+displayGame();
