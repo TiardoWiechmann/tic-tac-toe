@@ -14,10 +14,13 @@ h1 {
     width: 600px;
 }
 
-.turn {
+.turn,
+.result,
+.reset {
     font-size: 3rem;
     font-weight: 600;
     margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .board {
@@ -25,6 +28,7 @@ h1 {
     height: 600px;
     display: flex;
     flex-wrap: wrap;
+    outline: 10px solid black;
 }
 
 .cell {
@@ -34,4 +38,32 @@ h1 {
     background-color: aqua;
     border: 1px solid black;
     font-size: 3rem;
+}
+
+.result {
+    background-color: lightblue;
+    padding: 10px 20px;
+    border-radius: 1rem;
+}
+
+.reset {
+    display: flex;
+    justify-content: end;
+}
+
+.reset button {
+    font-size: 3rem;
+    font-weight: 600;
+    border-radius: 1rem;
+    background-color: lightgray;
+    padding: 10px 20px;
+    border: 4px solid black;
+}
+
+.reset button:hover {
+    background-color: rgb(158, 157, 157);
+}
+
+.reset button:active {
+    background-color: gray;
 }
