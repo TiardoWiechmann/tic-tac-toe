@@ -148,9 +148,10 @@ function Gamecontroller() {
 
 
 function displayGame() {
-    const game = Gamecontroller();
+    let game = Gamecontroller();
     const turnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
+    const resetBtn = document.querySelector(".reset button")
     updateScreen();
 
     function updateScreen() {
@@ -202,7 +203,16 @@ function displayGame() {
             result.textContent = "It's a tie!"
         }
         resultDiv.appendChild(result);
+
+        // Remove turn's content
+        const turn = document.querySelector(".turn");
+        turn.innerHTML = "";
     }
+
+    resetBtn.addEventListener("click", (e) => {
+        game = Gamecontroller();
+        updateScreen();
+    })
 }
 
 

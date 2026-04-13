@@ -14,12 +14,19 @@ h1 {
     width: 600px;
 }
 
+.turn  {
+    height: 5rem;
+}
+
 .turn,
 .result,
 .reset {
     font-size: 3rem;
     font-weight: 600;
-    margin-bottom: 40px;
+}
+
+.result,
+.reset {
     margin-top: 40px;
 }
 
@@ -44,6 +51,7 @@ h1 {
     background-color: lightblue;
     padding: 10px 20px;
     border-radius: 1rem;
+    height: 8rem;
 }
 
 .reset {
