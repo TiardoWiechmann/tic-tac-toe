@@ -47,19 +47,10 @@ function Gameboard() {
 }
 
 
-// Gameboard (for console):
-// Create 3x3 Array
-// Show board
-// Create player with name and mark
-// Place token of player1 in selected cell
-// Show board
-// Place token of player2 in selected cell
-// Show board
-
 function Gamecontroller() {
     const board = Gameboard();
-    const player1 = createPlayer("human", "X");
-    const player2 = createPlayer("computer", "O");
+    const player1 = createPlayer("Player1", "X");
+    const player2 = createPlayer("Player2", "O");
     let activePlayer = player1;
     printNewRound();
 
@@ -82,6 +73,15 @@ function Gamecontroller() {
     }
 
     const getActivePlayer = () => activePlayer;
+
+    const getPlayers = () => [player1, player2];
+
+    const setPlayers = (name1, mark1, name2, mark2) => {
+        player1.name = name1;
+        player1.mark = mark1;
+        player2.name = name2;
+        player2.mark = mark2;
+    }
 
     function createPlayer(name, mark) {
         return { name, mark };
@@ -143,7 +143,7 @@ function Gamecontroller() {
     }
 
 
-    return { playRound, getActivePlayer, getBoard: board.getBoard(), gameOver, checkWinner };
+    return { playRound, getActivePlayer, getPlayers, setPlayers, getBoard: board.getBoard(), gameOver, checkWinner };
 }
 
 
@@ -151,27 +151,9 @@ function displayGame() {
     let game = Gamecontroller();
     const turnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
-    const resetBtn = document.querySelector(".reset button")
     updateScreen();
-
-    function updateScreen() {
-        // Clear the board...
-        boardDiv.textContent = "";
-        // Display who's turn
-        turnDiv.textContent = `It's ${game.getActivePlayer().name}'s turn: `;
-        
-        // Display board
-        const board = game.getBoard;
-        board.forEach( (row, r_index) => {
-            row.forEach( (cell, c_index) => {
-                const cellBtn = document.createElement("button");
-                cellBtn.className = "cell";
-                cellBtn.setAttribute("data-index", `${r_index} ${c_index}`)
-                cellBtn.textContent = cell; 
-                boardDiv.appendChild(cellBtn);
-            });
-        });
-    }
+    const restartBtn = document.querySelector(".reset button");
+    const resultDiv = document.querySelector(".result");
 
     // Play
     // Use Eventlistener to get change cell
@@ -188,13 +170,42 @@ function displayGame() {
 
     })
 
+    restartBtn.addEventListener("click", () => resetGame())
+
+    function updateScreen() {
+        // Clear the board...
+        boardDiv.textContent = "";
+
+        definePlayers();
+        
+        // Display who's turn
+        turnDiv.textContent = `It's ${game.getActivePlayer().name}'s turn: `;
+        
+        // Display board
+        const board = game.getBoard;
+        board.forEach( (row, r_index) => {
+            row.forEach( (cell, c_index) => {
+                const cellBtn = document.createElement("button");
+                cellBtn.className = "cell";
+                cellBtn.setAttribute("data-index", `${r_index} ${c_index}`)
+                cellBtn.textContent = cell; 
+                boardDiv.appendChild(cellBtn);
+            });
+        });
+    }
+
+    function definePlayers() {
+        inputs = document.querySelectorAll("input");
+        const name1 = inputs[0].value;
+        const mark1 = inputs[1].value;
+        const name2 = inputs[2].value;
+        const mark2 = inputs[3].value;
+        game.setPlayers(name1, mark1, name2, mark2);
+    }
+
     function displayResult() {
-        const resultDiv = document.querySelector(".result");
-        if (resultDiv.firstElementChild){
-            const prevResult = document.querySelector(".result div");
-            resultDiv.removeChild(prevResult);
-        }
-        const result = document.createElement("div");
+        const result= document.querySelector(".result div");
+
         if (game.checkWinner()) {
             const activePlayer = game.getActivePlayer().name;
             result.textContent = `The winner is ${activePlayer}!`;
@@ -202,18 +213,18 @@ function displayGame() {
         else {
             result.textContent = "It's a tie!"
         }
-        resultDiv.appendChild(result);
 
         // Remove turn's content
         const turn = document.querySelector(".turn");
         turn.innerHTML = "";
     }
 
-    resetBtn.addEventListener("click", (e) => {
+    function resetGame(){
         game = Gamecontroller();
         updateScreen();
-    })
+        const result = document.querySelector(".result div");
+        result.textContent = "";
+    }
 }
-
 
 displayGame();
