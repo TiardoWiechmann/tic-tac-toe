@@ -52,24 +52,19 @@ function Gamecontroller() {
     const player1 = createPlayer("Player1", "X");
     const player2 = createPlayer("Player2", "O");
     let activePlayer = player1;
-    printNewRound();
 
     const playRound = (row, col) => {
         // If cell is invalid
         if (!board.placeMark(row, col, activePlayer.mark)){
             return;
         }
-        console.log(`${activePlayer.name} places ${activePlayer.mark} in row:${row} and column:${col}.`);
         if (checkWinner()){
-            printWinner();
             return;
         }
         if (checkTie()) {
-            console.log("It'a tie.");
             return;
         }
         switchPlayer();
-        printNewRound();
     }
 
     const getActivePlayer = () => activePlayer;
@@ -83,17 +78,19 @@ function Gamecontroller() {
         player2.mark = mark2;
     }
 
+    const gameOver = () => {
+        if(checkTie() || checkWinner()){
+            return true;
+        }
+        return false;
+    }
+
     function createPlayer(name, mark) {
         return { name, mark };
     }
 
     function switchPlayer() {
         activePlayer = activePlayer === player1 ? player2 : player1;
-    }
-
-    function printNewRound() {
-        board.printBoard();
-        console.log(`It s ${activePlayer.name}s turn: `);
     }
 
     const checkWinner = () => {
@@ -131,18 +128,6 @@ function Gamecontroller() {
         return true;
     }
 
-    const gameOver = () => {
-        if(checkTie() || checkWinner()){
-            return true;
-        }
-        return false;
-    }
-
-    const printWinner = () => {
-        console.log(`The Winner is ${activePlayer.name}`);
-    }
-
-
     return { playRound, getActivePlayer, getPlayers, setPlayers, getBoard: board.getBoard(), gameOver, checkWinner };
 }
 
@@ -151,26 +136,27 @@ function displayGame() {
     let game = Gamecontroller();
     const turnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
-    updateScreen();
     const restartBtn = document.querySelector(".reset button");
-    const resultDiv = document.querySelector(".result");
+    updateScreen();
+    interact();
 
-    // Play
-    // Use Eventlistener to get change cell
-    boardDiv.addEventListener("click", (e) => {
-        if( !game.gameOver()){
-            const currentBtn = e.target;
-            const [row, col] = currentBtn.dataset.index.split(" ");
-            game.playRound(row, col);
-            updateScreen();
-            if ( game.gameOver()) {
-                displayResult();
+
+    function interact() {
+        // Play
+        // Use Eventlistener to change cell
+        boardDiv.addEventListener("click", (e) => {
+            if( !game.gameOver()){
+                const currentBtn = e.target;
+                const [row, col] = currentBtn.dataset.index.split(" ");
+                game.playRound(row, col);
+                updateScreen();
+                if ( game.gameOver()) {
+                    displayResult();
+                }
             }
-        }
-
-    })
-
-    restartBtn.addEventListener("click", () => resetGame())
+        });
+        restartBtn.addEventListener("click", () => resetGame());
+    }
 
     function updateScreen() {
         // Clear the board...
@@ -226,5 +212,6 @@ function displayGame() {
         result.textContent = "";
     }
 }
+
 
 displayGame();
