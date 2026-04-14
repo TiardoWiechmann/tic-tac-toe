@@ -17,7 +17,7 @@ function Gameboard() {
     }
 
     // Player places token
-    const placeMark = (row, col, mark) => {
+    function placeMark(row, col, mark) {
         if (!validCell(row, col)) {
             return false;
         }
@@ -25,10 +25,8 @@ function Gameboard() {
         return true;
     }
     
-    const getBoard = () => board;
-
-    const printBoard = () => {
-        console.log(board);
+    function getBoard() {
+        return board;
     }
 
     // Check if chosen cell is valid
@@ -43,7 +41,7 @@ function Gameboard() {
         }
     }
 
-    return { placeMark, getBoard, printBoard };
+    return { placeMark, getBoard };
 }
 
 
@@ -53,7 +51,7 @@ function Gamecontroller() {
     const player2 = createPlayer("Player2", "O");
     let activePlayer = player1;
 
-    const playRound = (row, col) => {
+    function playRound(row, col) {
         // If cell is invalid
         if (!board.placeMark(row, col, activePlayer.mark)){
             return;
@@ -67,18 +65,22 @@ function Gamecontroller() {
         switchPlayer();
     }
 
-    const getActivePlayer = () => activePlayer;
+    function getActivePlayer(){
+        return activePlayer;
+    }
 
-    const getPlayers = () => [player1, player2];
+    function getPlayers() {
+        return [player1, player2];
+    }
 
-    const setPlayers = (name1, mark1, name2, mark2) => {
+    function setPlayers(name1, mark1, name2, mark2) {
         player1.name = name1;
         player1.mark = mark1;
         player2.name = name2;
         player2.mark = mark2;
     }
 
-    const gameOver = () => {
+    function gameOver() {
         if(checkTie() || checkWinner()){
             return true;
         }
@@ -93,7 +95,7 @@ function Gamecontroller() {
         activePlayer = activePlayer === player1 ? player2 : player1;
     }
 
-    const checkWinner = () => {
+    function checkWinner() {
         const b = board.getBoard();
         for (let i=0; i<3; i++) {
             // Check rows
