@@ -1,6 +1,6 @@
 :root {
-    --font-size: 2rem;
-    --board-size: 300px;
+    --font-size: 1.5rem;
+    --board-size: 250px;
     --margin: 20px;
 }
 
@@ -12,11 +12,11 @@
     margin: 100px auto;
     display: grid;
     width: calc(var(--board-size) * 2);
-    grid-template-rows: min-content min-content min-content  min-content var(--board-size) min-content;
+    grid-template-rows: repeat(min-content);
     justify-items: center;
     row-gap: 40px;
     background-color: antiquewhite;
-    border-radius: calc(var(--board-size) / 3);
+    border-radius: calc(var(--board-size) / 4);
 }
 
 h1 {
@@ -36,9 +36,8 @@ form {
 }
 
 form div {
-    display: grid; 
+    display: flex; 
     align-items: center;
-    grid-template-columns: 1fr 3fr;
 }
 
 label, 
@@ -47,9 +46,14 @@ input {
     padding: 2px 4px;
 }
 
-input {
+form input {
     border: none;
     border-radius: 5px;
+    flex-grow: 2;
+}
+
+form label {
+    flex-grow: 1;
 }
 
 input:focus {
