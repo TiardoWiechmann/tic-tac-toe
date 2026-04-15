@@ -140,7 +140,7 @@ function displayGame() {
     const boardDiv = document.querySelector(".board");
     const restartBtn = document.querySelector(".reset button");
     updateScreen();
-    interact();
+    restartBtn.addEventListener("click", () => interact());
 
 
     function interact() {
