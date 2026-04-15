@@ -5,15 +5,23 @@
     // If you only need one instance, use IIFE
 
 
+function Player(name, marker) {
+    return { name, marker};
+}
 
 function Gameboard() {
+    const board = createEmptyBoard();
+    
     // Create 3x3 board
-    const board = [];
-    for (let i=0; i<3; i++) {
-        board[i] = []
-        for(j=0; j<3; j++){
-            board[i].push(" ");
+    function createEmptyBoard() {
+        const board = [];
+        for (let i=0; i<3; i++) {
+            board[i] = []
+            for(j=0; j<3; j++){
+                board[i].push(" ");
+            }
         }
+        return board;
     }
 
     // Player places token
@@ -47,8 +55,8 @@ function Gameboard() {
 
 function Gamecontroller() {
     const board = Gameboard();
-    const player1 = createPlayer("Player1", "X");
-    const player2 = createPlayer("Player2", "O");
+    const player1 = Player("Player1", "X");
+    const player2 = Player("Player2", "O");
     let activePlayer = player1;
 
     function playRound(row, col) {
@@ -56,10 +64,7 @@ function Gamecontroller() {
         if (!board.placeMark(row, col, activePlayer.mark)){
             return;
         }
-        if (checkWinner()){
-            return;
-        }
-        if (checkTie()) {
+        if (gameOver()) {
             return;
         }
         switchPlayer();
@@ -85,10 +90,6 @@ function Gamecontroller() {
             return true;
         }
         return false;
-    }
-
-    function createPlayer(name, mark) {
-        return { name, mark };
     }
 
     function switchPlayer() {
