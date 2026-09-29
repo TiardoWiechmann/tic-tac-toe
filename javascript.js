@@ -1,9 +1,4 @@
-// Store gameboard as an array inside of a gameboard object
-// Store players in objects
-// Controlflow is an object
-// Goal: as little global code as possible (use factory functions)
-    // If you only need one instance, use IIFE
-
+const EMPTY = ""
 
 function Player(name, marker) {
     return { name, marker};
@@ -18,7 +13,7 @@ function Gameboard() {
         for (let i=0; i<3; i++) {
             board[i] = []
             for(j=0; j<3; j++){
-                board[i].push(" ");
+                board[i].push(EMPTY);
             }
         }
         return board;
@@ -100,19 +95,19 @@ function Gamecontroller() {
         const b = board.getBoard();
         for (let i=0; i<3; i++) {
             // Check rows
-            if(b[i][0] === b[i][1] && b[i][1] === b[i][2] && b[i][0] != " ") {
+            if(b[i][0] === b[i][1] && b[i][1] === b[i][2] && b[i][0] != EMPTY) {
                 return true;
             }
             // Check columns
-            if(b[0][i] === b[1][i] && b[1][i] === b[2][i] && b[0][i] != " ") {
+            if(b[0][i] === b[1][i] && b[1][i] === b[2][i] && b[0][i] != EMPTY) {
                 return true;
             }
         }
         // Check diagonals
-        if(b[0][0] === b[1][1] && b[1][1] === b[2][2] && b[0][0] != " ") {
+        if(b[0][0] === b[1][1] && b[1][1] === b[2][2] && b[0][0] != EMPTY) {
             return true;
         }
-        if(b[0][2] === b[1][1] && b[1][1] === b[2][0] && b[1][1] != " ") {
+        if(b[0][2] === b[1][1] && b[1][1] === b[2][0] && b[1][1] != EMPTY) {
             return true;
         }
         return false;
@@ -123,7 +118,7 @@ function Gamecontroller() {
         const b = board.getBoard();
         for (let i=0; i<3; i++ ){
             for (let j=0; j<3; j++){
-                if (b[i][j] == " "){
+                if (b[i][j] == EMPTY){
                     return false;
                 }
             }

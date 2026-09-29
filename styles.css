@@ -6,16 +6,21 @@
 
 * {
     margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4efe6;
+    font-family: system-ui, sans-serif;
 }
 
 .container {
-    margin: 100px auto;
+    margin: 2rem auto;
     display: grid;
-    width: calc(var(--board-size) * 2);
-    grid-template-rows: repeat(min-content);
+    width: min(100% - 2rem, calc(var(--board-size) * 2.3));
     justify-items: center;
     row-gap: 40px;
-    background-color: antiquewhite;
+    background-color: rgba(238, 209, 170, 0.849);
     border-radius: calc(var(--board-size) / 4);
 }
 
@@ -26,34 +31,30 @@ h1 {
 }
 
 form {
-    width: calc(var(--board-size) * 1.5);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    width: 80%;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 10px 1rem;    
+    align-items: center;
     background-color: lightblue;
     padding: 20px;
     border-radius: 1rem;
 }
 
 form div {
-    display: flex; 
-    align-items: center;
+    display: contents;
+}
+
+form input {
+    min-width: 0;
+    border: none;
+    border-radius: 5px;
 }
 
 label, 
 input {
-    font-size: calc(var(--font-size) / 2);
+    font-size: 1rem;
     padding: 2px 4px;
-}
-
-form input {
-    border: none;
-    border-radius: 5px;
-    flex-grow: 2;
-}
-
-form label {
-    flex-grow: 1;
 }
 
 input:focus {
@@ -74,29 +75,32 @@ input:focus {
 
 .board {
     width: var(--board-size);
-    height: var(--board-size);
-    display: flex;
-    flex-wrap: wrap;
-    outline: 5px ridge black;
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;                     
+    background-color: black;     
+    border: 5px solid black;
 }
 
 .cell {
-    height: calc(100%/3);
-    width: calc(100%/3);
-    flex: 1 0 auto;
-    background-color: rgb(173, 230, 221);
-    color: black;
-    outline: 5px ridge black;
     border: none;
-    font-size: var(--font-size);
+    background-color: rgb(173, 230, 221);
+    aspect-ratio: 1;
+    font-size: calc(var(--font-size) * 1.5);
     font-weight: 600;
+    cursor: pointer;
+}
+
+.cell:hover:empty {
+    background-color: rgb(150, 215, 205);
 }
 
 .result {
     background-color: lightblue;
     padding: 10px 20px;
     border-radius: 1rem;
-    height: calc(var(--font-size)*2 + 2rem);
+    min-height: calc(var(--font-size)*3 + 20px);
     margin-bottom: var(--margin);
 
 }
